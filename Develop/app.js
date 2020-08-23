@@ -10,7 +10,123 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+const teamDataArray = [];
 
+
+function createMemeber(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "name",
+            message: "What is this employee's name?"
+        },
+        {
+            type: "input",
+            name: "empId",
+            message: "What is this employee's ID?"
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "What is this employee's email?"
+        },
+        {
+            type: "checkbox",
+            name: "role",
+            message: "What is this employee's role?",
+            choices: [
+                "Manager",
+                "Engineer",
+                "Intern"
+            ]
+        },
+        {
+            type: "checkbox",
+            name: "addMore",
+            message: "Do you want to add more employees?",
+            choices: [
+                "Yes",
+                "No"
+            ]
+        }
+
+    ]).then(function(answer){
+
+        name = answer.name;
+        empId = answer.empId;
+        role = answer.role;
+        email = answer.email;
+        addMore = answer.addMore;
+
+        if(addMore === "Yes"){
+            if(role === "Manager"){
+                createManager();
+            }
+            else if (role === "Engineer"){
+                createEngineer();
+            }
+            else if (role === "Intern"){
+                createIntern();
+            }
+        }
+        else{
+            render(teamDataArray);
+        }
+    });
+}
+
+function createManager(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "officeNum",
+            message: "What is this manager's office number?"
+        }
+    ]).then(function(data){
+
+        officeNum = data.officeNum;
+        const manager = new Manager(name, empId, email, officeNum);
+        teamDataArray.push(manager);
+        createMemeber();
+    })
+
+}
+
+function createEngineer(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "gitHubName",
+            message: "What is this engineer's GitHub handle?"
+        }
+    ]).then(function(data){
+
+        gitHubName = data.gitHubName;
+        const engineer = new Engineer(name, empId, email, gitHubName);
+        teamDataArray.push(engineer);
+        createMemeber();
+    })
+    
+}
+
+function createIntern(){
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "schoolName",
+            message: "Which school did this intern graduate?"
+        }
+    ]).then(function(data){
+
+        schoolName = data.schoolName;
+        const intern= new Intern(name, empId, email, schoolName);
+        teamDataArray.push(intern);
+        createMemeber();
+    })
+    
+}
+
+createMemeber();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -33,3 +149,9 @@ const render = require("./lib/htmlRenderer");
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
+
+const mainFile = fs.readFile('templates/main.html');
+
+
+
+fs.writeFile(outputPath, )
