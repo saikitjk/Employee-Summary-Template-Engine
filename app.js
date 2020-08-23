@@ -13,8 +13,8 @@ const render = require("./lib/htmlRenderer");
 const teamDataArray = [];
 
 
-function createMemeber(){
-    inquirer.prompt([
+function createMember(){
+    return inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -41,33 +41,50 @@ function createMemeber(){
             ]
         }
 
-    ]).then(function(answer){
+    ])}
 
-        name = answer.name;
-        empId = answer.empId;
-        role = answer.role;
-        email = answer.email;
-        addMore = answer.addMore;
+    async function init(){
+        try{
 
-      
-            if(role === "Manager"){
+            const member = await createMember();
+            name = member.name;
+            empId = member.empId;
+            role = member.role;
+            email = member.email;
+            //console.log(role[0]);
+
+            if(role[0] === "Manager"){
                 createManager();
             }
-            else if (role === "Engineer"){
+            else if (role[0] === "Engineer"){
+
                 createEngineer();
             }
-            else if (role === "Intern"){
+            else if (role[0] === "Intern"){
                 createIntern();
             }
-    });
-}
+
+        }
+        catch(err){
+            console.log(err);
+        }
+    }
+    
+
+
+
+
+
+
+
+
 
 function createManager(){
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "officeNum",
-            message: "What is this manager's office number?"
+            message: "What is this manager's office number?",
         },
         {
             type: "checkbox",
@@ -83,24 +100,25 @@ function createManager(){
         officeNum = data.officeNum;
         const manager = new Manager(name, empId, email, officeNum);
         teamDataArray.push(manager);
+        
 
-        if(addMore === "Yes"){  
-            createMemeber();  
+        if(data.addMore[0] === "Yes"){  
+            init();  
         }
         else{
             render(teamDataArray);
         }
         
-    })
+    });
 
 }
 
 function createEngineer(){
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "gitHubName",
-            message: "What is this engineer's GitHub handle?"
+            message: "What is this engineer's GitHub handle?",
         },
         {
             type: "checkbox",
@@ -116,23 +134,25 @@ function createEngineer(){
         gitHubName = data.gitHubName;
         const engineer = new Engineer(name, empId, email, gitHubName);
         teamDataArray.push(engineer);
-        
-        if(addMore === "Yes"){  
-            createMemeber();  
+        //console.log(data.addMore[0]);
+
+        if(data.addMore[0] === "Yes"){  
+            init();  
         }
         else{
             render(teamDataArray);
+            console.log(teamDataArray);
         }
-    })
+    });
     
 }
 
 function createIntern(){
-    inquirer.prompt([
+    return inquirer.prompt([
         {
             type: "input",
             name: "schoolName",
-            message: "Which school did this intern graduate?"
+            message: "Which school did this intern graduate?",
         },
         {
             type: "checkbox",
@@ -148,18 +168,18 @@ function createIntern(){
         schoolName = data.schoolName;
         const intern= new Intern(name, empId, email, schoolName);
         teamDataArray.push(intern);
-        
-        if(addMore === "Yes"){  
-            createMemeber();  
+
+        if(data.addMore[0] === "Yes"){  
+            init();  
         }
         else{
             render(teamDataArray);
         }
-    })
+    });
     
 }
 
-createMemeber();
+init();
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -183,8 +203,8 @@ createMemeber();
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-const mainFile = fs.readFile('templates/main.html');
+// const mainFile = fs.readFile('templates/main.html');
 
 
 
-fs.writeFile(outputPath, )
+// fs.writeFile(outputPath, )

@@ -15,5 +15,13 @@
   "bugs": {
     "url": "https://github.com/saikitjk/Employee-Summary-Template-Engine/issues"
   },
-  "homepage": "https://github.com/saikitjk/Employee-Summary-Template-Engine#readme"
+  "homepage": "https://github.com/saikitjk/Employee-Summary-Template-Engine#readme",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "dependencies": {
+    "inquirer": "^7.3.3"
+  },
+  "devDependencies": {}
 }
