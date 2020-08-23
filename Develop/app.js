@@ -39,15 +39,6 @@ function createMemeber(){
                 "Engineer",
                 "Intern"
             ]
-        },
-        {
-            type: "checkbox",
-            name: "addMore",
-            message: "Do you want to add more employees?",
-            choices: [
-                "Yes",
-                "No"
-            ]
         }
 
     ]).then(function(answer){
@@ -58,7 +49,7 @@ function createMemeber(){
         email = answer.email;
         addMore = answer.addMore;
 
-        if(addMore === "Yes"){
+      
             if(role === "Manager"){
                 createManager();
             }
@@ -68,10 +59,6 @@ function createMemeber(){
             else if (role === "Intern"){
                 createIntern();
             }
-        }
-        else{
-            render(teamDataArray);
-        }
     });
 }
 
@@ -81,13 +68,29 @@ function createManager(){
             type: "input",
             name: "officeNum",
             message: "What is this manager's office number?"
+        },
+        {
+            type: "checkbox",
+            name: "addMore",
+            message: "Do you want to add more employees?",
+            choices: [
+                "Yes",
+                "No"
+            ]
         }
     ]).then(function(data){
 
         officeNum = data.officeNum;
         const manager = new Manager(name, empId, email, officeNum);
         teamDataArray.push(manager);
-        createMemeber();
+
+        if(addMore === "Yes"){  
+            createMemeber();  
+        }
+        else{
+            render(teamDataArray);
+        }
+        
     })
 
 }
@@ -98,13 +101,28 @@ function createEngineer(){
             type: "input",
             name: "gitHubName",
             message: "What is this engineer's GitHub handle?"
+        },
+        {
+            type: "checkbox",
+            name: "addMore",
+            message: "Do you want to add more employees?",
+            choices: [
+                "Yes",
+                "No"
+            ]
         }
     ]).then(function(data){
 
         gitHubName = data.gitHubName;
         const engineer = new Engineer(name, empId, email, gitHubName);
         teamDataArray.push(engineer);
-        createMemeber();
+        
+        if(addMore === "Yes"){  
+            createMemeber();  
+        }
+        else{
+            render(teamDataArray);
+        }
     })
     
 }
@@ -115,13 +133,28 @@ function createIntern(){
             type: "input",
             name: "schoolName",
             message: "Which school did this intern graduate?"
+        },
+        {
+            type: "checkbox",
+            name: "addMore",
+            message: "Do you want to add more employees?",
+            choices: [
+                "Yes",
+                "No"
+            ]
         }
     ]).then(function(data){
 
         schoolName = data.schoolName;
         const intern= new Intern(name, empId, email, schoolName);
         teamDataArray.push(intern);
-        createMemeber();
+        
+        if(addMore === "Yes"){  
+            createMemeber();  
+        }
+        else{
+            render(teamDataArray);
+        }
     })
     
 }
