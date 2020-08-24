@@ -4,7 +4,9 @@ const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
-
+const util = require("util");
+//const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -41,42 +43,7 @@ function createMember(){
             ]
         }
 
-    ])}
-
-    async function init(){
-        try{
-
-            const member = await createMember();
-            name = member.name;
-            empId = member.empId;
-            role = member.role;
-            email = member.email;
-            //console.log(role[0]);
-
-            if(role[0] === "Manager"){
-                createManager();
-            }
-            else if (role[0] === "Engineer"){
-
-                createEngineer();
-            }
-            else if (role[0] === "Intern"){
-                createIntern();
-            }
-
-        }
-        catch(err){
-            console.log(err);
-        }
-    }
-    
-
-
-
-
-
-
-
+    ])};
 
 
 function createManager(){
@@ -107,6 +74,7 @@ function createManager(){
         }
         else{
             render(teamDataArray);
+            createHtml()
         }
         
     });
@@ -141,7 +109,8 @@ function createEngineer(){
         }
         else{
             render(teamDataArray);
-            console.log(teamDataArray);
+            createHtml()
+            //console.log(teamDataArray);
         }
     });
     
@@ -174,12 +143,81 @@ function createIntern(){
         }
         else{
             render(teamDataArray);
+            createHtml()
         }
     });
     
 }
 
-init();
+async function createHtml(){
+    let team = fs.readFileSync('templates/main.html');
+    
+
+
+    console.log("what is this on99" + team);
+
+
+    fs.writeFileSync(outputPath, team, function(err){
+        if(err){
+            console.log("this is the fucking error"+err);
+        }
+    })
+}
+
+
+
+async function init(){
+    try{
+
+        const member = await createMember();
+        name = member.name;
+        empId = member.empId;
+        role = member.role;
+        email = member.email;
+        //console.log(role[0]);
+
+        if(role[0] === "Manager"){
+            createManager();
+        }
+        else if (role[0] === "Engineer"){
+
+            createEngineer();
+        }
+        else if (role[0] === "Intern"){
+            createIntern();
+        }
+
+        // fs.readFile('templates/main.html', 'utf8', function (err, team) {
+        //     fs.writeFile(outputPath, team, function(err, result) {
+        //        if(err)
+        //        { 
+        //        console.log('error', err);
+        //        }
+        //        console.log("team.html created successfully.");
+        //     });
+        //    });
+        // let team = fs.readFile('templates/main.html')
+        // await writeFileAsync(outputPath,team, 'utf8');
+
+        // console.log("team.html created successfully.");
+
+        // team = fs.readFile('templates/main.html');
+            
+        // fs.writeFile(outputPath,team, function(err){;
+        //     console.log("team.html created successfully.");
+        // })
+        
+    }
+    catch(err){
+        console.log(err);
+    }
+
+}
+
+
+init()
+
+
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 
@@ -203,8 +241,4 @@ init();
 // object with the correct structure and methods. This structure will be crucial in order
 // for the provided `render` function to work! ```
 
-// const mainFile = fs.readFile('templates/main.html');
-
-
-
-// fs.writeFile(outputPath, )
+// });
