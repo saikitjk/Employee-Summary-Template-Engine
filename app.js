@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 const util = require("util");
 //const readFile = util.promisify(fs.readFile);
-const writeFile = util.promisify(fs.writeFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
@@ -150,18 +150,12 @@ function createIntern(){
 }
 
 async function createHtml(){
-    let team = fs.readFileSync('templates/main.html');
-    
+    const html = render(teamDataArray);
+    //console.log("on99" + html);
+    await writeFileAsync (outputPath,html);
 
+    console.log("team.html created successfully.")
 
-    console.log("what is this on99" + team);
-
-
-    fs.writeFileSync(outputPath, team, function(err){
-        if(err){
-            console.log("this is the fucking error"+err);
-        }
-    })
 }
 
 
@@ -186,26 +180,6 @@ async function init(){
         else if (role[0] === "Intern"){
             createIntern();
         }
-
-        // fs.readFile('templates/main.html', 'utf8', function (err, team) {
-        //     fs.writeFile(outputPath, team, function(err, result) {
-        //        if(err)
-        //        { 
-        //        console.log('error', err);
-        //        }
-        //        console.log("team.html created successfully.");
-        //     });
-        //    });
-        // let team = fs.readFile('templates/main.html')
-        // await writeFileAsync(outputPath,team, 'utf8');
-
-        // console.log("team.html created successfully.");
-
-        // team = fs.readFile('templates/main.html');
-            
-        // fs.writeFile(outputPath,team, function(err){;
-        //     console.log("team.html created successfully.");
-        // })
         
     }
     catch(err){
@@ -218,27 +192,3 @@ async function init(){
 init()
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
-
-// });
