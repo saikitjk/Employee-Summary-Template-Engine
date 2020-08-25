@@ -7,9 +7,16 @@ This is a CLI application that generate a employee summary page by promopting th
 
 ## Demo
 
-    https://drive.google.com/file/d/1cA9iO_rHOPvi6n-X92jT8BCtyjEPQMTV/preview
+    https://drive.google.com/file/d/1zLFFWpwv2SVITyzmE1PLB-HOlbScdpPs/preview
 
 ## Screenshots
+
+![Screen Shot 2020-08-24 at 4 51 10 PM](https://user-images.githubusercontent.com/34286313/91122123-54a29480-e64e-11ea-8c90-daeff4b1b917.png)
+
+![Screen Shot 2020-08-24 at 4 50 10 PM](https://user-images.githubusercontent.com/34286313/91122136-62f0b080-e64e-11ea-8de6-8b188c305d9f.png)
+
+
+
 
 
 
