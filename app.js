@@ -85,7 +85,7 @@ function createEngineer(){
     return inquirer.prompt([
         {
             type: "input",
-            name: "gitHubName",
+            name: "github",
             message: "What is this engineer's GitHub handle?",
         },
         {
@@ -99,8 +99,8 @@ function createEngineer(){
         }
     ]).then(function(data){
 
-        gitHubName = data.gitHubName;
-        const engineer = new Engineer(name, empId, email, gitHubName);
+        github = data.github;
+        const engineer = new Engineer(name, empId, email, github);
         teamDataArray.push(engineer);
         //console.log(data.addMore[0]);
 

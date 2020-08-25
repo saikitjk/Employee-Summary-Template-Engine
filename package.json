@@ -2,9 +2,9 @@
   "name": "employee-summary-template-engine",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest --verbose test/*"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,8 @@
   },
   "dependencies": {
     "inquirer": "^7.3.3",
+    "jest": "^26.4.2",
+    "test": "^0.6.0",
     "util": "^0.12.3"
   },
   "devDependencies": {}
